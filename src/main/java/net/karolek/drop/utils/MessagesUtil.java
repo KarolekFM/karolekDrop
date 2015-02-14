@@ -12,7 +12,7 @@ public final class MessagesUtil {
     public static String replace(String source, Drop drop) {
         source = source.replace("{NAME}", drop.getName());
         source = source.replace("{ITEM}", ItemUtil.itemStackToString(drop.getItem()));
-        source = source.replace("{MESSAGE}", drop.getMessage());
+        source = source.replace("{MESSAGE}", drop.getMessage() != null && drop.getMessage().length() > 0 ? drop.getMessage() : "");
         source = source.replace("{CHANCE}", Double.toString(drop.getChance()));
         source = source.replace("{EXP}", Integer.toString(drop.getExp()));
         source = source.replace("{FORTUNE}", drop.isFortune() ? "tak" : "nie");
