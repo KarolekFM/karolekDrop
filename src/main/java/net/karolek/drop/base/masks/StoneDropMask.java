@@ -27,7 +27,7 @@ public class StoneDropMask extends DropMask {
         int exp = Config.STONE$EXP;
         List<ItemStack> drops = new ArrayList<>();
         for (Drop drop : getDropManager().getRandomDrops()) {
-            if (drop.canDrop(player)) continue;
+            if (!drop.canDrop(player)) continue;
             if (drop.isDisabled(player.getName())) continue;
             if (!drop.enoughPickaxe(tool)) continue;
             if (!drop.enoughHeight(block.getY())) continue;
