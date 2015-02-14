@@ -1,0 +1,21 @@
+drops:
+  cancel:
+  - DIAMOND_ORE
+  - IRON_ORE
+  - EMERALD_ORE
+  - GOLD_ORE
+  - COAL_ORE
+  random:
+  - ==: Drop
+    name: 'Diament'
+    item: 'DIAMOND'
+    message: '&7Trafiles na: &3diament&7! ({AMOUNT} szt)'
+    chance: 10.1
+    exp: 10
+    fortune: true
+    height: '>10'
+    amount: '1-3'
+    points: '10-25'
+    tools:
+    - DIAMOND_PICKAXE
+    - IRON_PICKAXE

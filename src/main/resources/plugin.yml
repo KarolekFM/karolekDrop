@@ -1,0 +1,4 @@
+name: karolekDrop
+version: '${project.version}'
+main: net.karolek.drop.KarolekDrop
+author: Karolek
