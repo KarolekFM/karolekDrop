@@ -197,6 +197,7 @@ public class Drop implements ConfigurationSerializable {
 
     @Override
     public Map<String, Object> serialize() {
+        System.out.println(permission + " :D");
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("name", this.name);
         if (this.permission != null) map.put("permission", this.permission);
