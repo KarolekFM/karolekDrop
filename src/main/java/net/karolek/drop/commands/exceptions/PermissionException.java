@@ -3,6 +3,6 @@ package net.karolek.drop.commands.exceptions;
 public class PermissionException extends CommandException {
 
     public PermissionException(String message) {
-        super("&cNie masz praw do wykonania tej komendy! &7(" + message + ")");
+        super("&cYou don't have permissions to run that command! &7(" + message + ")");
     }
 }

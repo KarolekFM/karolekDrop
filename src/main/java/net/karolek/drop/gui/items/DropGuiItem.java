@@ -4,8 +4,8 @@ import net.karolek.drop.Config;
 import net.karolek.drop.base.Drop;
 import net.karolek.drop.gui.DropGuiMenu;
 import net.karolek.drop.gui.ItemClickEvent;
+import net.karolek.drop.utils.MessagesUtil;
 import net.karolek.drop.utils.Util;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -30,17 +30,10 @@ public class DropGuiItem extends GuiItem {
         ItemMeta meta = icon.getItemMeta();
         meta.setDisplayName(Util.fixColor(drop.getName()));
         List<String> lores = new ArrayList<>();
-        double bonus = drop.getChanceBonus(viever.getName());
-        lores.add(replace("szansa", drop.getChance() + "%" + (bonus > 0D ? " + " + bonus + "%" : "")));
-        if (drop.getExp() > 0)
-            lores.add(replace("doswiadczenie", drop.getExp()));
-        lores.add(replace("fortune", drop.isFortune() ? "tak" : "nie"));
-        if (drop.getHeight() != null)
-            lores.add(replace("wypada na poziomie", drop.getHeight().getParse()));
-        if (drop.getAmount() != null)
-            lores.add(replace("wypada w ilosci", drop.getAmount().getParse()));
-        lores.add(replace("wydobyc mozna", StringUtils.join(drop.getTools(), ", ")));
-        lores.add(replace("aktywny", drop.isDisabled(viever.getName()) ? "nie" : "tak"));
+
+        for (String lore : Config.GUI_ICON_LORE)
+            lores.add(MessagesUtil.replace(lore, drop, viever));
+
         meta.setLore(Util.fixColor(lores));
         icon.setItemMeta(meta);
         return icon;
@@ -52,9 +45,9 @@ public class DropGuiItem extends GuiItem {
         drop.changeStatus(event.getPlayer().getName());
         menu.update(event.getPlayer());
 
+        if (Config.GUI_CLOSE$AFTER$CLICK)
+            event.setWillClose(true);
+
     }
 
-    private String replace(String key, Object value) {
-        return Config.FORMAT_GUI_LORE.replace("{KEY}", key).replace("{VALUE}", String.valueOf(value));
-    }
 }

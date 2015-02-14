@@ -2,6 +2,7 @@ package net.karolek.drop;
 
 import lombok.Getter;
 import net.karolek.drop.base.Drop;
+import net.karolek.drop.commands.executors.KarolekDropExecutor;
 import net.karolek.drop.commands.executors.StoneExecutor;
 import net.karolek.drop.common.Containable;
 import net.karolek.drop.listeners.BlockBreakListener;
@@ -47,6 +48,7 @@ public class KarolekDrop extends JavaPlugin implements Containable {
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
 
         new StoneExecutor().register();
+        new KarolekDropExecutor().register();
 
     }
 

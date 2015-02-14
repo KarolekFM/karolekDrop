@@ -10,6 +10,7 @@ import net.karolek.drop.utils.ItemUtil;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -20,6 +21,7 @@ import java.util.*;
 public class Drop implements ConfigurationSerializable {
 
     private final String name;
+    private final String permission;
     private final ItemStack item;
     private final String message;
     private final double chance;
@@ -32,8 +34,9 @@ public class Drop implements ConfigurationSerializable {
     private final List<Material> tools = new ArrayList<>();
     private final Set<String> disabled = new HashSet<>();
 
-    public Drop(String name, ItemStack item, String message, double chance, int exp, boolean fortune, boolean canDisable, IntegerCompare height, IntegerCompare amount, IntegerCompare points, List<Material> tools) {
+    public Drop(String name, String permission, ItemStack item, String message, double chance, int exp, boolean fortune, boolean canDisable, IntegerCompare height, IntegerCompare amount, IntegerCompare points, List<Material> tools) {
         this.name = name;
+        this.permission = permission;
         this.item = item;
         this.message = message;
         this.chance = chance;
@@ -48,6 +51,7 @@ public class Drop implements ConfigurationSerializable {
 
     public static Drop deserialize(Map<String, Object> map) {
         String name = null;
+        String permission = null;
         ItemStack item = null;
         String message = null;
         double chance = 0D;
@@ -63,6 +67,10 @@ public class Drop implements ConfigurationSerializable {
             name = (String) map.get("name");
             if (name == null)
                 throw new IllegalArgumentException("Name can not be null!");
+        }
+
+        if (map.containsKey("permission")) {
+            permission = (String) map.get("permission");
         }
 
         if (map.containsKey("item")) {
@@ -108,12 +116,23 @@ public class Drop implements ConfigurationSerializable {
         }
 
 
-        return new Drop(name, item, message, chance, exp, fortune, canDisable, height, amount, points, tools);
+        return new Drop(name, permission, item, message, chance, exp, fortune, canDisable, height, amount, points, tools);
 
     }
 
+    public double getChance(Player viewer) {
+        double chance = getChance();
+        if (Config.VIP$DROP_ENABLED & viewer.hasPermission(Config.VIP$DROP_PERMISSION))
+            chance += chance * Config.VIP$DROP_MULTIPLIER;
+        return chance;
+    }
+
+    public boolean canDrop(Player viewer) {
+        return this.permission == null || viewer.hasPermission(this.permission);
+    }
+
     public double getChanceBonus(String string) {
-        if (!Config.BONUS_ENABLED) return 0D;
+        if (!Config.BONUS$DROP_ENABLED) return 0D;
         if (!canDisable) return 0D;
         if (isDisabled(string)) return 0D;
 
@@ -139,7 +158,7 @@ public class Drop implements ConfigurationSerializable {
         int deltaDrops = dropsSize - disabledDrops;
         double deltaChance = dropsChance - disabledDropsChance;
 
-        return (getChance() / (double) deltaDrops) * Config.BONUS_MULTIPLIER;
+        return (getChance() / (double) deltaDrops) * Config.BONUS$DROP_MULTIPLIER;
     }
 
     public boolean isDisabled(String string) {
@@ -162,6 +181,7 @@ public class Drop implements ConfigurationSerializable {
 
     public boolean enoughPickaxe(ItemStack item) {
         if (!ItemUtil.isPickaxe(item)) return false;
+        if (tools.size() < 1) return true;
         return tools.contains(item.getType());
     }
 
@@ -179,6 +199,7 @@ public class Drop implements ConfigurationSerializable {
     public Map<String, Object> serialize() {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("name", this.name);
+        if (this.permission != null) map.put("permission", this.permission);
         map.put("item", ItemUtil.itemStackToString(this.item));
         if (this.message != null && this.message.length() > 0) map.put("message", this.message);
         map.put("chance", this.chance);

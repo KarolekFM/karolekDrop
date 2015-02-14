@@ -9,7 +9,7 @@ import net.karolek.drop.utils.Util;
 public class DropGuiMenu extends GuiMenu {
 
     public DropGuiMenu() {
-        super(Util.fixColor(Config.FORMAT_GUI_NAME), Size.fit(KarolekDrop.getPlugin().getDropManager().getRandomDrops().size()));
+        super(Util.fixColor(Config.GUI_NAME), Size.fit(KarolekDrop.getPlugin().getDropManager().getRandomDrops().size()));
         int pos = 0;
         for (Drop drop : getDropManager().getRandomDrops()) {
             setItem(pos, new DropGuiItem(drop, this));

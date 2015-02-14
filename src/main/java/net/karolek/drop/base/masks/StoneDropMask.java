@@ -24,13 +24,14 @@ public class StoneDropMask extends DropMask {
 
     @Override
     public void breakBlock(Player player, ItemStack tool, Block block) {
-        int exp = Config.STONE_EXP;
+        int exp = Config.STONE$EXP;
         List<ItemStack> drops = new ArrayList<>();
         for (Drop drop : getDropManager().getRandomDrops()) {
+            if (drop.canDrop(player)) continue;
             if (drop.isDisabled(player.getName())) continue;
             if (!drop.enoughPickaxe(tool)) continue;
             if (!drop.enoughHeight(block.getY())) continue;
-            if (!RandomUtil.getChance(drop.getChance())) continue;
+            if (!RandomUtil.getChance(drop.getChance(player))) continue;
             int amount = drop.getRandomAmount();
             int points = drop.getRandomPoints();
 
@@ -41,7 +42,7 @@ public class StoneDropMask extends DropMask {
 
             ItemStack item = drop.getItem().clone();
             item.setAmount(amount);
-            exp += drop.getExp();
+            exp += drop.getExp() * amount;
             drops.add(item);
 
             if (drop.getMessage() != null && drop.getMessage().length() > 0) {

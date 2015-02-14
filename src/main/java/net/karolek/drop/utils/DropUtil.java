@@ -19,6 +19,7 @@ public final class DropUtil {
     public static final IntegerCompare FORTUNE_1_COMPARE = Compare.parseString(Config.FORTUNE_1_AMOUNT);
     public static final IntegerCompare FORTUNE_2_COMPARE = Compare.parseString(Config.FORTUNE_2_AMOUNT);
     public static final IntegerCompare FORTUNE_3_COMPARE = Compare.parseString(Config.FORTUNE_3_AMOUNT);
+    public static final IntegerCompare FORTUNE_HIGH_LEVELS_COMPARE = Compare.parseString(Config.FORTUNE_HIGH$LEVELS_AMOUNT);
 
     private DropUtil() {
     }
@@ -53,8 +54,10 @@ public final class DropUtil {
             case 2:
                 if (RandomUtil.getChance(Config.FORTUNE_2_PERCENT)) return Compare.getRandomValue(FORTUNE_2_COMPARE);
             case 3:
-            default:
                 if (RandomUtil.getChance(Config.FORTUNE_3_PERCENT)) return Compare.getRandomValue(FORTUNE_3_COMPARE);
+            default:
+                if (RandomUtil.getChance(Config.FORTUNE_HIGH$LEVELS_PERCENT))
+                    return Compare.getRandomValue(FORTUNE_HIGH_LEVELS_COMPARE);
                 else return 0;
         }
     }
