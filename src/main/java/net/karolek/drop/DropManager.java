@@ -10,6 +10,7 @@ import net.karolek.drop.common.ConfigFile;
 import net.karolek.drop.common.Containable;
 import net.karolek.drop.common.DropObject;
 import net.karolek.drop.compare.Compare;
+import net.karolek.drop.compare.Compares;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +38,7 @@ public class DropManager extends DropObject implements Containable {
     public DropMask getDropMask(Material material) {
         DropMask mask = dropMasks.get(material);
         if (mask == null)
-            mask = new NormalDropMask(getPlugin());
+            mask = NormalDropMask.INSTANCE;
         return mask;
     }
 
@@ -52,11 +53,11 @@ public class DropManager extends DropObject implements Containable {
         dropMasks = new HashMap<>();
         randomDrops = new ArrayList<>();
         for (String s : getConfig().getStringList("drops.cancel"))
-            dropMasks.put(Material.matchMaterial(s), new CancelDropMask(getPlugin()));
+            dropMasks.put(Material.matchMaterial(s), CancelDropMask.INSTANCE);
         dropMasks.put(Material.STONE, new StoneDropMask(getPlugin()));
         randomDrops.addAll((Collection<? extends Drop>) getConfig().getList("drops.random"));
         if (randomDrops.size() < 1) {
-            randomDrops.add(new Drop("Diament", "karolekdrop.diament", new ItemStack(Material.DIAMOND), "&7Trafiles na &3diament&7!", 1.15, 7, true, true, Compare.parseString("<30"), Compare.parseString("1-2"), Compare.parseString("10-25"), Arrays.asList(Material.DIAMOND_PICKAXE)));
+            randomDrops.add(new Drop("Diament", "karolekdrop.diament", new ItemStack(Material.DIAMOND), "&7Trafiles na &3diament&7!", 1.15, 7, true, true, Compares.parseString("<30"), Compares.parseString("1-2"), Compares.parseString("10-25"), Arrays.asList(Material.DIAMOND_PICKAXE)));
             getConfig().set("drops.random", randomDrops);
             getConfigFile().saveConfig();
         }
