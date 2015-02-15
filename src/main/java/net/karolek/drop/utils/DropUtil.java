@@ -2,6 +2,7 @@ package net.karolek.drop.utils;
 
 import net.karolek.drop.Config;
 import net.karolek.drop.compare.Compare;
+import net.karolek.drop.compare.Compares;
 import net.karolek.drop.compare.IntegerCompare;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -16,10 +17,10 @@ import java.util.Map;
 
 public final class DropUtil {
 
-    public static final IntegerCompare FORTUNE_1_COMPARE = Compare.parseString(Config.FORTUNE_1_AMOUNT);
-    public static final IntegerCompare FORTUNE_2_COMPARE = Compare.parseString(Config.FORTUNE_2_AMOUNT);
-    public static final IntegerCompare FORTUNE_3_COMPARE = Compare.parseString(Config.FORTUNE_3_AMOUNT);
-    public static final IntegerCompare FORTUNE_HIGH_LEVELS_COMPARE = Compare.parseString(Config.FORTUNE_HIGH$LEVELS_AMOUNT);
+    public static final Compare<Integer> FORTUNE_1_COMPARE = Compares.parseString(Config.FORTUNE_1_AMOUNT);
+    public static final Compare<Integer> FORTUNE_2_COMPARE = Compares.parseString(Config.FORTUNE_2_AMOUNT);
+    public static final Compare<Integer> FORTUNE_3_COMPARE = Compares.parseString(Config.FORTUNE_3_AMOUNT);
+    public static final Compare<Integer> FORTUNE_HIGH_LEVELS_COMPARE = Compares.parseString(Config.FORTUNE_HIGH$LEVELS_AMOUNT);
 
     private DropUtil() {
     }
@@ -50,14 +51,14 @@ public final class DropUtil {
     public static int addFortuneEnchant(ItemStack tool) {
         switch (tool.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)) {
             case 1:
-                if (RandomUtil.getChance(Config.FORTUNE_1_PERCENT)) return Compare.getRandomValue(FORTUNE_1_COMPARE);
+                if (RandomUtil.getChance(Config.FORTUNE_1_PERCENT)) return Compares.getRandomValue(FORTUNE_1_COMPARE);
             case 2:
-                if (RandomUtil.getChance(Config.FORTUNE_2_PERCENT)) return Compare.getRandomValue(FORTUNE_2_COMPARE);
+                if (RandomUtil.getChance(Config.FORTUNE_2_PERCENT)) return Compares.getRandomValue(FORTUNE_2_COMPARE);
             case 3:
-                if (RandomUtil.getChance(Config.FORTUNE_3_PERCENT)) return Compare.getRandomValue(FORTUNE_3_COMPARE);
+                if (RandomUtil.getChance(Config.FORTUNE_3_PERCENT)) return Compares.getRandomValue(FORTUNE_3_COMPARE);
             default:
                 if (RandomUtil.getChance(Config.FORTUNE_HIGH$LEVELS_PERCENT))
-                    return Compare.getRandomValue(FORTUNE_HIGH_LEVELS_COMPARE);
+                    return Compares.getRandomValue(FORTUNE_HIGH_LEVELS_COMPARE);
                 else return 0;
         }
     }
