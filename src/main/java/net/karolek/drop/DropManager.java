@@ -37,7 +37,7 @@ public class DropManager extends DropObject implements Containable {
     public DropMask getDropMask(Material material) {
         DropMask mask = dropMasks.get(material);
         if (mask == null)
-            mask = new NormalDropMask(getPlugin());
+            mask = NormalDropMask.INSTANCE;
         return mask;
     }
 
@@ -52,7 +52,7 @@ public class DropManager extends DropObject implements Containable {
         dropMasks = new HashMap<>();
         randomDrops = new ArrayList<>();
         for (String s : getConfig().getStringList("drops.cancel"))
-            dropMasks.put(Material.matchMaterial(s), new CancelDropMask(getPlugin()));
+            dropMasks.put(Material.matchMaterial(s), CancelDropMask.INSTANCE);
         dropMasks.put(Material.STONE, new StoneDropMask(getPlugin()));
         randomDrops.addAll((Collection<? extends Drop>) getConfig().getList("drops.random"));
         if (randomDrops.size() < 1) {

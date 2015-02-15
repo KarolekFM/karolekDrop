@@ -20,7 +20,9 @@ import java.util.List;
 
 public class NormalDropMask extends DropMask {
 
-    public NormalDropMask(KarolekDrop plugin) {
+    public static final NormalDropMask INSTANCE = new NormalDropMask(KarolekDrop.getPlugin());
+
+    private NormalDropMask(KarolekDrop plugin) {
         super(plugin);
     }
 
