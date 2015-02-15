@@ -3,7 +3,6 @@ package net.karolek.drop.utils;
 import net.karolek.drop.Config;
 import net.karolek.drop.compare.Compare;
 import net.karolek.drop.compare.Compares;
-import net.karolek.drop.compare.IntegerCompare;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;

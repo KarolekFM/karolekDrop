@@ -6,7 +6,6 @@ import net.karolek.drop.Config;
 import net.karolek.drop.KarolekDrop;
 import net.karolek.drop.compare.Compare;
 import net.karolek.drop.compare.Compares;
-import net.karolek.drop.compare.IntegerCompare;
 import net.karolek.drop.utils.ItemUtil;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
