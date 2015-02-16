@@ -5,7 +5,7 @@ import lombok.Setter;
 import net.karolek.drop.Config;
 import net.karolek.drop.KarolekDrop;
 import net.karolek.drop.compare.Compare;
-import net.karolek.drop.compare.IntegerCompare;
+import net.karolek.drop.compare.Compares;
 import net.karolek.drop.utils.ItemUtil;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -28,13 +28,13 @@ public class Drop implements ConfigurationSerializable {
     private final int exp;
     private final boolean fortune;
     private final boolean canDisable;
-    private final IntegerCompare height;
-    private final IntegerCompare amount;
-    private final IntegerCompare points;
+    private final Compare<Integer> height;
+    private final Compare<Integer> amount;
+    private final Compare<Integer> points;
     private final List<Material> tools = new ArrayList<>();
     private final Set<String> disabled = new HashSet<>();
 
-    public Drop(String name, String permission, ItemStack item, String message, double chance, int exp, boolean fortune, boolean canDisable, IntegerCompare height, IntegerCompare amount, IntegerCompare points, List<Material> tools) {
+    public Drop(String name, String permission, ItemStack item, String message, double chance, int exp, boolean fortune, boolean canDisable, Compare<Integer> height, Compare<Integer> amount, Compare<Integer> points, List<Material> tools) {
         this.name = name;
         this.permission = permission;
         this.item = item;
@@ -58,9 +58,9 @@ public class Drop implements ConfigurationSerializable {
         int exp = 0;
         boolean fortune = false;
         boolean canDisable = true;
-        IntegerCompare height = null;
-        IntegerCompare amount = null;
-        IntegerCompare points = null;
+        Compare<Integer> height = null;
+        Compare<Integer> amount = null;
+        Compare<Integer> points = null;
         List<Material> tools = new ArrayList<>();
 
         if (map.containsKey("name")) {
@@ -100,15 +100,15 @@ public class Drop implements ConfigurationSerializable {
         }
 
         if (map.containsKey("height")) {
-            height = Compare.parseString((String) map.get("height"));
+            height = Compares.parseString((String) map.get("height"));
         }
 
         if (map.containsKey("amount")) {
-            amount = Compare.parseString((String) map.get("amount"));
+            amount = Compares.parseString((String) map.get("amount"));
         }
 
         if (map.containsKey("points")) {
-            points = Compare.parseString((String) map.get("points"));
+            points = Compares.parseString((String) map.get("points"));
         }
 
         if (map.containsKey("tools")) {
@@ -187,12 +187,12 @@ public class Drop implements ConfigurationSerializable {
 
     public int getRandomAmount() {
         if (this.amount == null) return 1;
-        return Compare.getRandomValue(this.amount);
+        return Compares.getRandomValue(this.amount);
     }
 
     public int getRandomPoints() {
         if (this.points == null) return 0;
-        return Compare.getRandomValue(this.points);
+        return Compares.getRandomValue(this.points);
     }
 
     @Override
