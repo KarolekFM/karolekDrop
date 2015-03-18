@@ -58,7 +58,7 @@ public abstract class AbstractExecutor implements CommandExecutor {
     public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         try {
             if (this.permission != null && this.permission.length() > 0) {
-                if (!sender.isOp() || !sender.hasPermission(this.permission))
+                if (!sender.hasPermission(this.permission))
                     throw new PermissionException(this.permission);
             }
             if (playerExec) {
