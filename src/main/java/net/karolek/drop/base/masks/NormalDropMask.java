@@ -20,7 +20,9 @@ import java.util.List;
 
 public class NormalDropMask extends DropMask {
 
-    public NormalDropMask(KarolekDrop plugin) {
+    public static final NormalDropMask INSTANCE = new NormalDropMask(KarolekDrop.getPlugin());
+
+    private NormalDropMask(KarolekDrop plugin) {
         super(plugin);
     }
 
@@ -46,49 +48,26 @@ public class NormalDropMask extends DropMask {
                 amount = (plant.getSize().equals(CocoaPlant.CocoaPlantSize.LARGE) ? 3 : 1);
                 items.add(new ItemStack(Material.INK_SACK, amount, (short) 3));
                 break;
-            case PUMPKIN_STEM:
-                items.add(new ItemStack(Material.PUMPKIN_SEEDS, 1));
-                break;
-            case MELON_STEM:
-                items.add(new ItemStack(Material.MELON_SEEDS, 1));
-                break;
-            case CARROT:
-                data = block.getState().getData().getData();
-                switch (data) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                        amount = 1;
-                        break;
-                    case 7:
-                        amount = RandomUtil.getRandInt(1, 3);
-                        break;
-                }
-                items.add(new ItemStack(Material.CARROT_ITEM, amount));
-                break;
-            case POTATO:
-                data = block.getState().getData().getData();
-                switch (data) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                        amount = 1;
-                        break;
-                    case 7:
-                        amount = RandomUtil.getRandInt(1, 3);
-                        break;
-
-                }
-                items.add(new ItemStack(Material.POTATO_ITEM, amount));
-                break;
+            //case PUMPKIN_STEM: // temp :)
+            //    items.add(new ItemStack(Material.PUMPKIN_SEEDS, 1));
+            //    break;
+            //case MELON_STEM:
+            //    items.add(new ItemStack(Material.MELON_SEEDS, 1));
+            //    break;
+            //case CARROT:
+            //    data = block.getState().getData().getData();
+            //    if(data == 7) {
+            //        amount = RandomUtil.getRandInt(1, 3);
+            //    }
+            //    items.add(new ItemStack(Material.CARROT_ITEM, amount));
+            //    break;
+            //case POTATO:
+            //    data = block.getState().getData().getData();
+            //    if(data == 7) {
+            //        amount = RandomUtil.getRandInt(1, 3);
+            //    }
+            //    items.add(new ItemStack(Material.POTATO_ITEM, amount));
+            //    break;
             case CROPS:
                 final Crops wheat = (Crops) block.getState().getData();
                 int seedamount = 1;
@@ -98,10 +77,10 @@ public class NormalDropMask extends DropMask {
                 }
                 items.add(new ItemStack(Material.SEEDS, seedamount));
                 break;
-            case SUGAR_CANE_BLOCK:
-                amount = 1;
-                items.add(new ItemStack(Material.SUGAR_CANE, amount));
-                break;
+            //case SUGAR_CANE_BLOCK:
+            //    amount = 1;
+            //    items.add(new ItemStack(Material.SUGAR_CANE, amount));
+            //    break;
             case DOUBLE_PLANT:
                 data = block.getData();
                 if (data == 11) {
