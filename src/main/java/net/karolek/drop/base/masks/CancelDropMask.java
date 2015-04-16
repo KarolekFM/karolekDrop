@@ -10,7 +10,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class CancelDropMask extends DropMask {
 
-    public CancelDropMask(KarolekDrop plugin) {
+    public static final CancelDropMask INSTANCE = new CancelDropMask(KarolekDrop.getPlugin());
+
+    private CancelDropMask(KarolekDrop plugin) {
         super(plugin);
     }
 
